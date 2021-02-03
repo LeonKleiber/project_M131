@@ -1,13 +1,17 @@
+import React, { useState, useEffect } from 'react';
+import { fetchTable } from '../api/fetch'
 import Alert from "./Alert";
 
 const TimeTable = () => {
-	const content = [{ id: "231093294057968784785", date: "20.01.2021", weekday: "Mo", from: "08:00", to: "16:15", teacher: "D. Brotbeck", subject: "French", room: "206" }];
+	const classId = 3168196
 	return (
-		content ? <Schedule content={content} /> : <Alert text="Please Choose a Class to display the Schedule" type="warning" />
+		classId ? <Schedule classId={classId} week={''} /> : <Alert text="Please Choose a Class to display the Schedule" type="warning" />
 	)
 }
 
-const Schedule = ({ content }) => {
+const Schedule = ({ classId, week }) => {
+	const [tableContent, setTableContent] = useState([]);
+	useEffect(() => { fetchTable(setTableContent, classId, week) }, [])
 	return (
 		<table className="table table-dark ">
 			<thead>
@@ -22,7 +26,7 @@ const Schedule = ({ content }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{content.map((row) => (
+				{tableContent.map((row) => (
 					<tr key={row["id"]}>
 						<td>{row["date"]}</td>
 						<td>{row["weekday"]}</td>

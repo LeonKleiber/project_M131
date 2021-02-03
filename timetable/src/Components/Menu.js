@@ -1,38 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Dropdown from './Dropdown'
-import axios from 'axios';
+import { fetchJobOptions, fetchClassOptions } from '../api/fetch'
 
 
 
 const Menu = () => {
-
-	const fetchJobOptions = () =>
-		axios.get('https://sandbox.gibm.ch/berufe.php').then(jobs => {
-			setJobOptions(jobs.data.map(job => ({ value: job.beruf_id, name: job.beruf_name })))
-		}).catch((error) => {
-			console.log(error);
-		})
-
-	const fetchClassOptions = (id) => {
-		const param = id ? '?beruf_id=' + id : ''
-		axios.get('https://sandbox.gibm.ch/klassen.php' + param).then(classes => {
-			setClassOptions(classes.data.map(schoolClass => ({ value: schoolClass.klasse_id, name: schoolClass.klasse_name })))
-		}).catch((error) => {
-			console.log(error);
-		})
-	}
-
-	const changeJob = (event) => {
-		console.log("hi")
-		fetchClassOptions(event.target.value);
-	}
-
 	const [classOptions, setClassOptions] = useState([]);
 	const [jobOptions, setJobOptions] = useState([]);
+
 	useEffect(() => {
-		fetchJobOptions()
-		fetchClassOptions()
+		fetchJobOptions(setJobOptions)
+		fetchClassOptions(setClassOptions)
 	}, [])
+
+	const changeJob = (event) => {
+		console.log(event)
+		fetchClassOptions(setClassOptions, event.target.value);
+	}
+
+	const changeClass = (event) => {
+
+	}
 
 	return (
 		<div>
@@ -43,15 +31,5 @@ const Menu = () => {
 
 	)
 }
-
-
-
-const changeClass = (event) => {
-
-}
-
-
-
-
 
 export default Menu;

@@ -1,22 +1,17 @@
-import './App.css';
+import { useState } from 'react'
 import Menu from './Components/Menu';
-import TimeTable from './Components/TimeTable';
+import Schedule from './Components/Schedule';
 
 const App = () => {
+  const [classId, setClassId] = useState(localStorage.getItem('class') || '0')
   return (
     <div className="Wrapper">
-      <Content />
+      <Menu classId={classId} setClassId={(id) => {
+        setClassId(id)
+        localStorage.setItem('class', id)
+      }} />
+      <Schedule classId={classId} />
     </div>
-  );
-}
-
-const Content = () => {
-  return (
-    <>
-      <Menu />
-      <TimeTable />
-    </>
-
   )
 }
 

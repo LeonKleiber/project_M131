@@ -5,19 +5,24 @@ import Table from './Table'
 
 const WEEK_IN_MILSECS = 7 * 24 * 60 * 60 * 1000;
 
-const Schedule = ({ classId }) => classId !== '0' ? <Content classId={classId} /> : <Alert text="Please Choose a Class to display the Schedule" type="warning" />
+const Schedule = ({ classId }) => classId !== 0 ? <Content classId={classId} /> : <Alert text="Please Choose a Class to display the Schedule" type="warning" />
 
 const Content = ({ classId }) => {
 	const [date, setDate] = useState(new Date())
 	return (
-
-		<div><div className="btn-group">
-			<button className="btn btn-secondary" onClick={() => { setDate(changeWeek(date, -1)) }}>&lt;&lt;</button>
-			<button className="btn btn-secondary" onClick={() => { setDate(new Date()) }}>{getWeek(date)}</button>
-			<button className="btn btn-secondary" onClick={() => { setDate(changeWeek(date, 1)) }}>&gt;&gt;</button>
-		</div><Table classId={classId} week={getWeek(date)} /></div>
+		<div>
+			<WeekButtons date={date} setDate={setDate} />
+			<Table classId={classId} week={getWeek(date)} />
+		</div>
 	)
 }
+
+const WeekButtons = ({ date, setDate }) => (
+	<div className="btn-group mb-4">
+		<button className="btn btn-secondary" onClick={() => { setDate(changeWeek(date, -1)) }}>&lt;&lt;</button>
+		<button className="btn btn-secondary" onClick={() => { setDate(new Date()) }}>{getWeek(date)}</button>
+		<button className="btn btn-secondary" onClick={() => { setDate(changeWeek(date, 1)) }}>&gt;&gt;</button>
+	</div>)
 
 const changeWeek = (date, weeks) => new Date(date.getTime() + weeks * WEEK_IN_MILSECS)
 

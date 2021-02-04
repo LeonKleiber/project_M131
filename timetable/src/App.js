@@ -3,7 +3,7 @@ import Menu from './Components/Menu';
 import Schedule from './Components/Schedule';
 
 const App = () => {
-  const [classId, setClassId] = useState(localStorage.getItem('class') || '0')
+  const [classId, setClassId] = useState(localStorage.getItem('class') || 0)
   return (
     <div className="Wrapper">
       <Menu classId={classId} setClassId={(id) => {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Menu from './Components/Menu';
-import Schedule from './Components/Schedule';
+import Menu from './Components/Menu'
+import Schedule from './Components/Schedule'
 
 const App = () => {
   const [classId, setClassId] = useState(localStorage.getItem('class') || 0)
